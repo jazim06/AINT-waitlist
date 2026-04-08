@@ -186,29 +186,23 @@ export default function App() {
               </motion.div>
             </div>
 
-            {/* Content Section */}
-            <div className="relative z-10 px-6 py-8 mx-4 mb-8 sm:mx-auto sm:w-full sm:max-w-md flex flex-col items-center text-center bg-white/5 backdrop-blur-sm shadow-2xl rounded-[2rem]">
-              {/* Animated Glowing Border via CSS Masking */}
-              <div
-                className="absolute inset-0 z-0 rounded-[2rem] p-[1.5px] pointer-events-none"
+            {/* Content Section (Seamless Glass Overlay) */}
+            <div className="relative z-10 w-full pt-48 pb-12 px-6 flex flex-col items-center text-center">
+              
+              {/* Seamless Edge-to-Edge Frosted Glass Gradient Mask */}
+              <div 
+                className="absolute inset-0 z-0 pointer-events-none"
                 style={{
-                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude"
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)',
+                  maskImage: 'linear-gradient(to top, black 50%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to top, black 50%, transparent 100%)'
                 }}
-              >
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%]"
-                  style={{
-                    background: "conic-gradient(from 0deg, transparent 70%, rgba(255,255,255,0.8) 100%)"
-                  }}
-                />
-              </div>
+              />
 
-              {/* Content wraps */}
-              <div className="relative z-10 flex flex-col items-center w-full">
+              {/* Content wraps (Centered constraint) */}
+              <div className="relative z-10 flex flex-col items-center w-full sm:max-w-md sm:mx-auto">
                 {/* Tag */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
