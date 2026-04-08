@@ -1,31 +1,23 @@
 import { motion, AnimatePresence } from "motion/react";
-import { Mail, Volume2, VolumeX } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useState, useEffect, useRef, FormEvent } from "react";
 // @ts-expect-error TS doesn't know about PNG imports without a module declaration
 import logo from "./aint-white0logo.png";
 import { supabase } from "./lib/supabase";
+
 export default function App() {
   const [email, setEmail] = useState("");
   const [videoEnded, setVideoEnded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMuted, setIsMuted] = useState(true); // Default to muted to satisfy browser autoplay rules
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
+  
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLVideoElement>(null);
 
-  // Sync audio mute state with ref
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = isMuted;
-    }
-  }, [isMuted]);
-
-  useEffect(() => {
-    // 2.5 second loading screen timeline
+    // 2.5 second loading screen timeline before revealing "Enter"
     const timer = setTimeout(() => {
-      setIsLoading(false);
-      if (audioRef.current) {
-        audioRef.current.play().catch(() => { });
-      }
+      setIsLoaded(true);
     }, 2500);
 
     return () => clearTimeout(timer);
@@ -62,12 +54,23 @@ export default function App() {
     return () => clearInterval(timer);
   }, [targetDate]);
 
+  const handleEnter = () => {
+    setHasEntered(true);
+    // Explicit user interaction unlocks Safari's media restrictions
+    if (videoRef.current) {
+        videoRef.current.play().catch(e => console.warn(e));
+    }
+    if (audioRef.current) {
+        audioRef.current.muted = false; // Unmute entirely!
+        audioRef.current.play().catch(e => console.warn(e));
+    }
+  }
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Connects to your Supabase table and saves the email!
     const { error } = await supabase
       .from('waitlist')
       .insert([{ email: email }]);
@@ -87,36 +90,46 @@ export default function App() {
       {/* Mobile Container Simulation */}
       <div className="w-full max-w-md h-[844px] bg-black relative flex flex-col border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
 
-        {/* Loading Screen Overlay */}
+        {/* Loading / Entry Screen Overlay */}
         <AnimatePresence>
-          {isLoading && (
+          {!hasEntered && (
             <motion.div
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
               className="absolute inset-0 z-50 flex items-center justify-center bg-black"
             >
-              <div className="w-48 h-1 bg-white/20 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 2, ease: "easeInOut" }}
-                  className="h-full bg-white rounded-full shadow-[0_0_15px_rgba(255,255,255,0.8)]"
-                />
-              </div>
+              {!isLoaded ? (
+                <div className="w-48 h-1 bg-white/20 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 2.5, ease: "easeInOut" }}
+                    className="h-full bg-white rounded-full shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                  />
+                </div>
+              ) : (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  onClick={handleEnter}
+                  className="px-8 py-3 tracking-[0.3em] text-sm font-light text-white uppercase border border-white/30 hover:border-white/80 rounded-full hover:bg-white/10 transition-all duration-500"
+                >
+                  Enter The World
+                </motion.button>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Background Video */}
+        {/* Background Cinematic Video */}
         <video
           ref={videoRef}
           src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           playsInline
           webkit-playsinline="true"
           muted
-          defaultMuted
-          autoPlay
           onEnded={() => setVideoEnded(true)}
           className={`absolute z-0 inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-1000 ${videoEnded ? 'opacity-40' : 'opacity-100'}`}
         />
@@ -127,21 +140,8 @@ export default function App() {
           src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           loop
           playsInline
-          muted // Has to natively start muted or Apple blocks it
-          defaultMuted
-          autoPlay
           className="hidden pointer-events-none w-0 h-0"
         />
-
-        {/* Global Sound Control */}
-        {!isLoading && (
-          <button
-            onClick={() => setIsMuted(!isMuted)}
-            className="absolute top-6 right-6 z-50 p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white/50 hover:text-white transition-all duration-300 hover:scale-110"
-          >
-            {isMuted ? <VolumeX className="w-5 h-5 animate-pulse" /> : <Volume2 className="w-5 h-5" />}
-          </button>
-        )}
 
         {videoEnded && (
           <>
