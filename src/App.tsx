@@ -10,7 +10,7 @@ export default function App() {
   const [videoEnded, setVideoEnded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasEntered, setHasEntered] = useState(false);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLVideoElement>(null);
 
@@ -58,11 +58,11 @@ export default function App() {
     setHasEntered(true);
     // Explicit user interaction unlocks Safari's media restrictions
     if (videoRef.current) {
-        videoRef.current.play().catch(e => console.warn(e));
+      videoRef.current.play().catch(e => console.warn(e));
     }
     if (audioRef.current) {
-        audioRef.current.muted = false; // Unmute entirely!
-        audioRef.current.play().catch(e => console.warn(e));
+      audioRef.current.muted = false; // Unmute entirely!
+      audioRef.current.play().catch(e => console.warn(e));
     }
   }
 
@@ -253,7 +253,7 @@ export default function App() {
                     <input
                       type="email"
                       required
-                      placeholder="Enter your email"
+                      placeholder="Enter your email for early access"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-white/30 transition-colors"
