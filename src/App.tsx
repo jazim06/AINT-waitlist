@@ -106,7 +106,7 @@ export default function App() {
         {/* Background Video */}
         <video
           ref={videoRef}
-          src="https://res.cloudinary.com/dkjifrprm/video/upload/v1775588708/Video_Generation_Based_on_Image_wd03hk.mov"
+          src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           playsInline
           muted
           onEnded={() => setVideoEnded(true)}
@@ -116,7 +116,7 @@ export default function App() {
         {/* Looping Audio Extracted from Video - Changed to video tag since MOV audio might not decode in pure audio tags */}
         <video
           ref={audioRef}
-          src="https://res.cloudinary.com/dkjifrprm/video/upload/v1775588708/Video_Generation_Based_on_Image_wd03hk.mov"
+          src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           loop
           playsInline
           className="hidden pointer-events-none w-0 h-0"
