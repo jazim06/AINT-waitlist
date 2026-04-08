@@ -86,7 +86,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-[100dvh] w-full bg-black text-white font-sans flex flex-col relative overflow-hidden">
+    <div className="fixed inset-0 bg-black text-white font-sans flex flex-col overflow-hidden">
       {/* Main Fullscreen Container */}
       <div className="w-full h-full relative flex flex-col justify-between overflow-hidden">
 
