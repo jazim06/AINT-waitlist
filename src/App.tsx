@@ -78,7 +78,7 @@ export default function App() {
       if (error.code === '23505') alert("This email is already in the waitlist!");
       else alert("Oops! Something went wrong.");
     } else {
-      alert(`Welcome to AINT! ${email} has been classified.`);
+      alert(`Welcome to AINT! ${email} has been Arrived!.`);
       setEmail("");
     }
 
@@ -216,7 +216,7 @@ export default function App() {
                   transition={{ delay: 0.2 }}
                   className="px-4 py-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-[10px] uppercase tracking-widest mb-6"
                 >
-                  Phase 001 // Classified
+                  Phase 001 // The Arriver
                 </motion.div>
 
                 {/* Heading */}
@@ -226,8 +226,7 @@ export default function App() {
                   transition={{ delay: 0.3 }}
                   className="font-display font-bold text-3xl leading-tight mb-4 tracking-tight"
                 >
-                  NOTHING WILL <br />
-                  BE THE SAME
+                  A NEW STANDARD EXISTS
                 </motion.h1>
 
                 {/* Description */}
@@ -237,7 +236,10 @@ export default function App() {
                   transition={{ delay: 0.4 }}
                   className="text-white/60 text-sm leading-relaxed max-w-[280px] mb-8 font-light"
                 >
-                  "We're tearing down the establishment to build something unprecedented. Zero compromises. For those who refuse to follow. The drop is imminent."
+                  "We tore down everything that came before.
+                  Built something that has never existed.
+                  For those who climbed without losing themselves on the way up.
+                  Zero compromises. The drop is imminent."
                 </motion.p>
 
                 {/* Newsletter Form */}
@@ -264,7 +266,7 @@ export default function App() {
                     disabled={isSubmitting}
                     className="w-full bg-white text-black font-bold py-4 rounded-2xl text-sm hover:bg-white/90 transition-colors tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? "Classifying..." : "Notify Me"}
+                    {isSubmitting ? "Classifying..." : "I'VE ARRIVED."}
                   </button>
                 </motion.form>
               </div>
