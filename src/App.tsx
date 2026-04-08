@@ -16,7 +16,11 @@ export default function App() {
     const timer = setTimeout(() => {
       setIsLoading(false);
       if (videoRef.current) {
-        videoRef.current.play().catch(() => { });
+        videoRef.current.play().catch((err) => {
+          console.warn("Video autoplay blocked by browser:", err);
+          // Fallback: If browser completely blocks the video, show the UI anyway!
+          setVideoEnded(true); 
+        });
       }
       if (audioRef.current) {
         audioRef.current.play().catch(() => { });
