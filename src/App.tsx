@@ -113,6 +113,7 @@ export default function App() {
           src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           playsInline
           muted
+          autoPlay
           onEnded={() => setVideoEnded(true)}
           className={`absolute z-0 inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-1000 ${videoEnded ? 'opacity-40' : 'opacity-100'}`}
         />
@@ -123,6 +124,7 @@ export default function App() {
           src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           loop
           playsInline
+          autoPlay
           className="hidden pointer-events-none w-0 h-0"
         />
 
