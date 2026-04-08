@@ -187,7 +187,7 @@ export default function App() {
             </div>
 
             {/* Content Section (Seamless Glass Overlay) */}
-            <div className="relative z-10 w-full pt-48 pb-12 px-6 flex flex-col items-center text-center">
+            <div className="relative z-10 w-full pt-16 pb-36 px-6 flex flex-col items-center text-center">
 
               {/* Seamless Edge-to-Edge Frosted Glass Gradient Mask */}
               <div
@@ -228,7 +228,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-shine text-sm leading-relaxed max-w-[280px] mb-8 font-light"
+                  className="text-shine text-left w-full max-w-[280px] mx-auto text-sm leading-relaxed mb-8 font-light"
                 >
                   "We tore down everything that came before.
                   Built something that has never existed.
@@ -266,8 +266,8 @@ export default function App() {
               </div>
             </div>
 
-            {/* Home Indicator */}
-            <div className="absolute z-10 bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full" />
+            {/* Home Indicator Buffer (optional, just safety) */}
+            <div className="absolute z-10 bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/10 rounded-full" />
           </>
         )}
       </div>
