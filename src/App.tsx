@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import { Mail } from "lucide-react";
+import { Mail, Volume2, VolumeX } from "lucide-react";
 import { useState, useEffect, useRef, FormEvent } from "react";
 // @ts-expect-error TS doesn't know about PNG imports without a module declaration
 import logo from "./aint-white0logo.png";
@@ -8,8 +8,16 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [videoEnded, setVideoEnded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMuted, setIsMuted] = useState(true); // Default to muted to satisfy browser autoplay rules
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLVideoElement>(null);
+
+  // Sync audio mute state with ref
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
 
   useEffect(() => {
     // 2.5 second loading screen timeline
@@ -119,8 +127,21 @@ export default function App() {
           src="https://res.cloudinary.com/dkjifrprm/video/upload/q_auto,f_auto/v1775588708/Video_Generation_Based_on_Image_wd03hk.mp4"
           loop
           playsInline
+          muted // Has to natively start muted or Apple blocks it
+          defaultMuted
+          autoPlay
           className="hidden pointer-events-none w-0 h-0"
         />
+
+        {/* Global Sound Control */}
+        {!isLoading && (
+          <button
+            onClick={() => setIsMuted(!isMuted)}
+            className="absolute top-6 right-6 z-50 p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white/50 hover:text-white transition-all duration-300 hover:scale-110"
+          >
+            {isMuted ? <VolumeX className="w-5 h-5 animate-pulse" /> : <Volume2 className="w-5 h-5" />}
+          </button>
+        )}
 
         {videoEnded && (
           <>
