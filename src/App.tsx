@@ -86,9 +86,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans flex flex-col items-center justify-center p-4 overflow-hidden">
-      {/* Mobile Container Simulation */}
-      <div className="w-full max-w-md h-[844px] bg-black relative flex flex-col border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
+    <div className="h-[100dvh] w-full bg-black text-white font-sans flex flex-col relative overflow-hidden">
+      {/* Main Fullscreen Container */}
+      <div className="w-full h-full relative flex flex-col justify-between overflow-hidden">
 
         {/* Loading / Entry Screen Overlay */}
         <AnimatePresence>
@@ -187,7 +187,7 @@ export default function App() {
             </div>
 
             {/* Content Section */}
-            <div className="relative z-10 px-6 py-8 mx-4 mb-8 flex flex-col items-center text-center bg-white/5 backdrop-blur-sm shadow-2xl rounded-[2rem]">
+            <div className="relative z-10 px-6 py-8 mx-4 mb-8 sm:mx-auto sm:w-full sm:max-w-md flex flex-col items-center text-center bg-white/5 backdrop-blur-sm shadow-2xl rounded-[2rem]">
               {/* Animated Glowing Border via CSS Masking */}
               <div
                 className="absolute inset-0 z-0 rounded-[2rem] p-[1.5px] pointer-events-none"
